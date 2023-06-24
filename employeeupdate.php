@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>manager Data Input Form</title>
+  <title>employee Data Input Form</title>
   <style>
    body {
   margin: 0;
@@ -10,8 +11,8 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: stretch;
-}
-.page-container {
+ }
+ .page-container {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -24,166 +25,158 @@
       justify-content: flex-start;
       align-items: stretch;
     }
-.sidebar {
-  width: 200px;
-  height: auto;
-  background-color: #f0f0f0;
-  padding: 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.sidebar h3 {
-  margin-top: 0;
-}
-
-.sidebar a {
-  display: block;
-  margin-bottom: 10px;
-  padding: 10px;
-  width: 100%;
-  text-align: center;
-  text-decoration: none;
-  color: #333;
-  border-left: 5px solid transparent;
-}
-
-.sidebar a.active,
-.sidebar a:hover {
-  background-color: #ddd;
-  border-left-color: red;
-}
-
-.form-container {
-  flex: 1;
-  padding: 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-}
-
-.form-container h2 {
-    margin-top:0; 
-    margin-bottom :10px; 
-}
-
-.form-section {
-    margin-bottom :5px; 
-    border :1px solid #ccc; 
-    border-radius :4px; 
-    padding :10px; 
-    box-sizing :border-box; 
-}
-.form-section2{
-    height :auto; 
-    margin-bottom :5px; 
-    border :1px solid #ccc; 
-    border-radius :4px; 
-    padding :10px; 
-    box-sizing :border-box; 
-    
-}
-
-.form-section h3 {
-    margin-top :0; 
-    margin-bottom :5px; 
-}
-form {
-    display:block; 
-    flex-wrap :wrap; 
-    justify-content:left; 
-    align-items:center; 
-}
-
-label {
-    display:inline-block; 
-    width :140px; 
-    text-align:right; 
-    margin-right :20px; 
-}
-    
-input[type="submit"] {
-      background-color:#09f ; 
-      color:#fff ; 
-      border:none ; 
-      border-radius :4px ; 
-      padding :10px ; 
-      cursor:pointer ; 
-      font-size :16px ; 
-      margin-top :10px ;  
-}
-input,
-select,
-textarea {
-      position :inherits ;  
-      flex :1 ;  
-      padding :10px ;  
-      border :1px solid #ccc ;  
-      border-radius :4px ;  
-      box-sizing:border-box ;  
-      margin-bottom :10px ;  
-      font-size :16px ;  
-}
-
-input[type="file"] {
-      padding :10 ;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-      outline:none ;
-      border-color:#09f ;
-}
-
-select {
-      width :inherit ;
-      padding-left: 20px;
-      padding-right: 40px;
-}
-
-textarea {
-      height :auto ;
-}
-
-input[type="submit"]:hover {
-      background-color:#0077cc ;
-}
-
+ .sidebar {
+   width: 200px;
+   height: auto;
+   background-color: #f0f0f0;
+   padding: 20px;
+   box-sizing: border-box;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+ }
+ 
+ .sidebar h3 {
+   margin-top: 0;
+ }
+ 
+ .sidebar a {
+   display: block;
+   margin-bottom: 10px;
+   padding: 10px;
+   width: 100%;
+   text-align: center;
+   text-decoration: none;
+   color: #333;
+   border-left: 5px solid transparent;
+ }
+ 
+ .sidebar a.active,
+ .sidebar a:hover {
+   background-color: #ddd;
+   border-left-color: red;
+ }
+ 
+ .form-container {
+   flex: 1;
+   padding: 20px;
+   box-sizing: border-box;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: stretch;
+ }
+ 
+ .form-container h2 {
+     margin-top:0; 
+     margin-bottom :10px; 
+ }
+ 
+ .form-section {
+     margin-bottom :5px; 
+     border :1px solid #ccc; 
+     border-radius :4px; 
+     padding :10px; 
+     box-sizing :border-box; 
+ }
+ .form-section2{
+     height :auto; 
+     margin-bottom :5px; 
+     border :1px solid #ccc; 
+     border-radius :4px; 
+     padding :10px; 
+     box-sizing :border-box; 
+     
+ }
+ 
+ .form-section h3 {
+     margin-top :0; 
+     margin-bottom :5px; 
+ }
+ form {
+     display:block; 
+     flex-wrap :wrap; 
+     justify-content:left; 
+     align-items:center; 
+ }
+ 
+ label {
+     display:inline-block; 
+     width :140px; 
+     text-align:right; 
+     margin-right :20px; 
+ }
+     
+ input[type="submit"] {
+       background-color:#09f ; 
+       color:#fff ; 
+       border:none ; 
+       border-radius :4px ; 
+       padding :10px ; 
+       cursor:pointer ; 
+       font-size :16px ; 
+       margin-top :10px ;  
+ }
+ input,
+ select,
+ textarea {
+       position :inherits ;  
+       flex :1 ;  
+       padding :10px ;  
+       border :1px solid #ccc ;  
+       border-radius :4px ;  
+       box-sizing:border-box ;  
+       margin-bottom :10px ;  
+       font-size :16px ;  
+ }
+ 
+ input[type="file"] {
+       padding :10 ;
+ }
+ 
+ input:focus,
+ select:focus,
+ textarea:focus {
+       outline:none ;
+       border-color:#09f ;
+ }
+ 
+ select {
+       width :inherit ;
+       padding-left: 20px;
+       padding-right: 40px;
+ }
+ 
+ textarea {
+       height :auto ;
+ }
+ 
+ input[type="submit"]:hover {
+       background-color:#0077cc ;
+ }
+ 
 
   </style>
+  <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="css/main.min.css" />
 </head>
 <body>
 <div class="page-container">
   <?php include 'header.php'; ?>
 
   <div class="content-container">
-  <div class="sidebar">
-    <h3>admin</h3>
-    <a  href="department_and_position.php">department and position</a>
-    <a href="aproveleave.php">aprove leave</a>
-    <a href="createusers.php">createusers</a>
-    <a href="employee.php">add employee</a>
-    <a class="active"href="manager.php">add manage</a>
-    <a href="deductionandallowance.php">deduction and allowance</a>
-    <a href="adddeductionandallowance.php">add deduction and allowance</a>
-    <a href="qrcode.php">qrcode</a>
-    <a href="branchmanager.php">branch</a>
-    <a href="everymonth.php">salary</a>
-    <a href="updateemployee.php">update employee</a>
-  </div>
 
   <div class="form-container">
-    <h2>manager Data Input Form</h2>
+    <h2>employee Data Input Form</h2>
 
     <div class="form-section">
       <h3>Personal Information</h3>
-      <form id="employeeForm" action="fillmanager.php" method="post"enctype="multipart/form-data">
+      <form id="employeeForm" action="fillemployee.php" method="post"enctype="multipart/form-data">
         <label for="firstname">First Name:</label>
         <input type="text" id="firstname" name="firstname"required>
         <label for="middlename">Middle Name:</label>
@@ -221,7 +214,7 @@ input[type="submit"]:hover {
             <option value="Dire Dawa">Dire Dawa</option>
           </select>
 
-          <label style="margin-top: -10px;"for="city">city:</label>
+        <label style="margin-top: -10px;"for="city">city:</label>
         <input type="text" id="city" name="city"required>
           
         <label style="margin-top: -10px;"for="street">street:</label>
@@ -230,22 +223,33 @@ input[type="submit"]:hover {
             <h3>Employment Information</h3>
 
             <div id="employmentForm">
-              <?php
+            <?php
               require_once "connection.php";
+              //query the branch table
+              $sql = "SELECT branchID,managerID,branchname FROM branch";
+              $result = $conn->query($sql);
+
+              // Generate branch select element
+              echo '<label for="branch">branch:</label>';
+              echo '<select  name="branchID" id="branch" onchange="updatePositionSelect()"required>';
+              while ($row = $result->fetch_assoc()) {
+                  echo '<option value="' . $row['branchID'] . $row['managerID'] . '">' . $row['branchname'] . '</option>';
+              }
+              echo '</select>';
               // Query department table
               $sql = "SELECT departmentID, departmentname FROM department";
               $result = $conn->query($sql);
 
               // Generate department select element
-              echo '<label for="department">Department:</label>';
-              echo '<select style="margin-right: 80px;" name="department" id="department" onchange="updatePositionSelect()"required>';
+              echo '<label style="margin-left:77px"for="department">Department:</label>';
+              echo '<select  name="department" id="department" onchange="updatePositionSelect()"required>';
               while ($row = $result->fetch_assoc()) {
                   echo '<option value="' . $row['departmentID'] . '">' . $row['departmentname'] . '</option>';
               }
               echo '</select>';
 
               // Generate position select element
-              echo '<label  style="margin-left:-15px"for="position">Position:</label>';
+              echo '<label  style="margin-left:67px"for="position">Position:</label>';
               echo '<select  name="position" id="position"required>';
               echo '</select>';
               // Generate positionsByDepartment object
@@ -291,24 +295,31 @@ input[type="submit"]:hover {
 
                   // Call updatePositionSelect on page load to populate initial position options
                   updatePositionSelect();
-              </script>
+              </script><br>
 
-              <label  style="margin-left:35px"for="hiredate">Date of Hire:</label>
-              <input type="date" id="hiredate" name="hiredate"required><br>
-              <label style="margin-left: -3px;" for="eduction">education:</label>
+
+              <label style="margin-left:-3px"for="hiredate">Date of Hire:</label>
+              <input type="date" id="hiredate" name="hiredate"required>
+              <label style="margin-left: 85px;" for="eduction">education:</label>
                 <select id="status" name="educationstatus" required>
-                    <option value="">-- choose an option --</option>
-                    <option value="msc">MSc</option>
-                    <option value="bsc">BSc</option>
-                    <option value="phd">PhD</option>
-                    <option value="mba">MBA</option>
-                    <option value="ba">BA</option>
-                    <option value="ma">MA</option>
-                    <option value="others">Others</option>
+                   <option value="msc">MSc</option>
+                  <option value="bsc">BSc</option>
+                  <option value="phd">PhD</option>
+                  <option value="mba">MBA</option>
+                  <option value="ba">BA</option>
+                  <option value="ma">MA</option>
+                  <option value="others">Others</option>
                 </select>
-                <label style="margin-left:-3px"for="yearlyvacationdays">yearly vacation days:</label>
+                <label style="margin-left:0px"for="status">Employment Status:</label>
+              <select id="status"name="employmentstatus"required>
+                <option value="">--Please choose an option--</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Contract">Contract</option>
+              </select><br>
+              <label style="margin-left:0px"for="yearlyvacationdays">yearly vacation days:</label>
                 <input type="number" id="yearlyvacationdays" name="yearlyvacationdays"required>
-              <label style="margin-left:-25px"for="file-input">base salary</label>
+              <label style="margin-left:20px"for="file-input">base salary:</label>
                   <input type="number" id="salary" name="salary"required><br>
                   <label for="file-input">File (resume):</label>
 <input type="file" id="file-input" name="file" onchange="updateFilePreview()" required>

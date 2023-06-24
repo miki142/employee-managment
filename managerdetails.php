@@ -207,6 +207,10 @@ session_start();
     <a href="managerleave.php">leave</a>
     <a href="managerattendance.php">attendance</a>
     <a class="active"href="managerdetails.php">details</a>
+    <a href="branch/addbranchemployee.php">add branch employees</a>
+    <a href="branch/displayemployees.php">view branch employees</a>
+    <a href="branch/displaysalaryemployee.php">view employee salary</a>
+    <a href="branch/aprovebranchleave.php">aprove branch leave</a>
   </div>
     <div class="form-container">
     <?php
@@ -233,7 +237,9 @@ if ($result_manager->num_rows > 0) {
         echo "<tr><td>Last Name:</td><td>".$row_manager["lastname"]."</td></tr>";
         echo "<tr><td>Date of Birth:</td><td>".$row_manager["dateofbirth"]."</td></tr>";
         echo "<tr><td>Gender:</td><td>".$row_manager["gender"]."</td></tr>";
-        echo "<tr><td>Address:</td><td>".$row_manager["address"]."</td></tr>";
+        echo "<tr><td>state:</td><td>".$row_manager["state"]."</td></tr>";
+        echo "<tr><td>city:</td><td>".$row_manager["city"]."</td></tr>";
+        echo "<tr><td>street:</td><td>".$row_manager["street"]."</td></tr>";
         echo "<tr><td>Primary Phone:</td><td>".$row_manager["primary_phone"]."</td></tr>";
         echo "<tr><td>Secondary Phone:</td><td>".$row_manager["secondary_phone"]."</td></tr>";
         echo "<tr><td>Date of Join:</td><td>".$row_manager["dateofjoin"]."</td></tr>";

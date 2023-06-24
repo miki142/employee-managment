@@ -1,12 +1,13 @@
 <?php
 session_start();
+require_once "../connection.php";
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>employee Data Input Form</title>
-  <style>
-   body {
+    <title>Manager Dashboard</title>
+    <style>
+       body {
   margin: 0;
   padding: 0;
   display: flex;
@@ -29,7 +30,7 @@ session_start();
     }
  .sidebar {
    width: 200px;
-   height: 100%;
+   height: auto;
    background-color: #f0f0f0;
    padding: 20px;
    box-sizing: border-box;
@@ -56,8 +57,8 @@ session_start();
  
  .sidebar a.active,
  .sidebar a:hover {
-   background-color: #ddd;
-   border-left-color: blueviolet;
+  background-color: #ddd;
+  border-left-color: #09f;
  }
  
  .form-container {
@@ -83,7 +84,7 @@ session_start();
      box-sizing :border-box; 
  }
  .form-section2{
-     height :350px; 
+     height :auto; 
      margin-bottom :5px; 
      border :1px solid #ccc; 
      border-radius :4px; 
@@ -158,38 +159,37 @@ session_start();
        background-color:#0077cc ;
  }
  
-
-  </style>
+       </style>
 </head>
 <body>
+    
 <div class="page-container">
-  <?php include 'header.php'; ?>
+  <?php include '../header.php'; ?>
 
   <div class="content-container">
   <div class="sidebar">
     <h3>Sidebar</h3>
-    <a  href="department_and_position.php">department and position</a>
-    <a href="aproveleave.php">aprove leave</a>
-    <a href="createusers.php">createusers</a>
-    <a  class="active"href="employee.php">add employee</a>
-    <a href="manager.php">add manage</a>
-    <a href="deductionandallowance.php">deduction and allowance</a>
-    <a href="adddeductionandallowance.php">add deduction and allowance</a>
-    <a href="qrcode.php">qrcode</a>
+    <a href="../managerdashboard.php">Home</a>
+    <a href="../managerleave.php">leave</a>
+    <a href="../managerattendance.php">attendance</a>
+    <a href="../managerdetails.php">details</a>
+    <a class="active"href="addbranchemployee.php">add branch employees</a>
+    <a href="displayemployees.php">view branch employees</a>
+    <a href="displaysalaryemployee.php">view employee salary</a>
+    <a href="aprovebranchleave.php">aprove branch leave</a>
   </div>
-
   <div class="form-container">
     <h2>employee Data Input Form</h2>
 
     <div class="form-section">
       <h3>Personal Information</h3>
-      <form id="employeeForm" action="fillemployee.php" method="post"enctype="multipart/form-data">
+      <form id="employeeForm" action="fillbranchemployee.php" method="post"enctype="multipart/form-data">
         <label for="firstname">First Name:</label>
         <input type="text" id="firstname" name="firstname"required>
         <label for="middlename">Middle Name:</label>
         <input type="text" id="middlename" name="middlename"required>
         <label for="lastname">Last Name:</label>
-        <input type="text" id="lastname" name="lastname"required>
+        <input type="text" id="lastname" name="lastname"required><Br>
         <label for="gender">Gender:</label>
         <select id="gender" name="gender" style="width: fit-content;"required>
           <option value="">-choose an option-</option>
@@ -226,12 +226,12 @@ session_start();
           
         <label style="margin-top: -10px;"for="street">street:</label>
         <input type="text" id="street" name="street"required>
-          <div class="form-section2">
+        <div class="form-section2">
             <h3>Employment Information</h3>
 
             <div id="employmentForm">
             <?php
-              require_once "connection.php";
+              require_once "../connection.php";
               //query the branch table
               $sql = "SELECT branchID,managerID,branchname FROM branch";
               $result = $conn->query($sql);
@@ -319,7 +319,7 @@ session_start();
                   <option value="ma">MA</option>
                   <option value="others">Others</option>
                 </select>
-                <label style="margin-left:0px"for="status">Employment Status:</label>
+                <label style="margin-left:100px"for="status">Employment Status:</label>
               <select id="status"name="employmentstatus"required>
                 <option value="">--Please choose an option--</option>
                 <option value="Full-time">Full-time</option>
@@ -330,68 +330,66 @@ session_start();
                 <input type="number" id="yearlyvacationdays" name="yearlyvacationdays"required>
               <label style="margin-left:-50px"for="file-input">base salary:</label>
                   <input type="number" id="salary" name="salary"required>
-                  
-              <label style="margin-left:-3px"for="file-input">File(resume):</label>
-                  <input type="file" id="file-input" name="file"onchange="updateFilePreview()"required>
-                  <button id="preview-button"  style="display: none; position: absolute; bottom: 100px; right: 300px;"onclick="openPreviewDialog()">Preview</button>
-                  </div>
-                <label style="margin-left:-47px"for="others-photo">Photo:</label>
-                  <input type="file" id="others-photo"name="photo" onchange="updatePhotoPreview()"required>
-                  <img id="photo-preview" src="" style="display: none; max-width: 200px; max-height: 200px; position:absolute; bottom: 30px; right: 600px;">
-                       
-                
-                  <script>
-                      function updateFilePreview() {
-                            // Get the selected file
-                            var file = document.getElementById("file-input").files[0];
-                            if (file) {
-                                // Show the preview button
-                                document.getElementById("preview-button").style.display = "inline-block";
-                            } else {
-                                // Hide the preview button
-                                document.getElementById("preview-button").style.display = "none";
-                            }
-                        }
+                  <label for="file-input">File (resume):</label>
+<input type="file" id="file-input" name="file" onchange="updateFilePreview()" required>
+<button id="preview-button" style="display: none;" onclick="openPreviewDialog()">Preview</button>
 
-                        function openPreviewDialog() {
-                            // Get the selected file
-                            var file = document.getElementById("file-input").files[0];
-                            if (file) {
-                                // Create a URL for the file
-                                var fileURL = URL.createObjectURL(file);
-                                // Open the file in a new window
-                                var previewWindow = window.open(fileURL, "PDF Preview", "width=400,height=400");
-                            }
-                        }                  
-                      function updatePhotoPreview() {
-                          // Get photo file
-                          let photoInput = document.getElementById("others-photo");
-                          let photoFile = photoInput.files[0];
+<label for="others-photo">Photo:</label>
+<input type="file" id="others-photo" name="photo" onchange="updatePhotoPreview()" required>
+<img id="photo-preview" src="" style="display: none; max-width: 200px; max-height: 200px;">
 
-                          // Get photo preview element
-                          let photoPreview = document.getElementById("photo-preview");
+<script>
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
-                          // Update photo preview
-                          if (photoFile) {
-                              let reader = new FileReader();
-                              reader.onload = function(e) {
-                                  photoPreview.src = e.target.result;
-                                  photoPreview.style.display = "block";
-                              }
-                              reader.readAsDataURL(photoFile);
-                          } else {
-                              photoPreview.src = "";
-                              photoPreview.style.display = "none";
-                          }
-                      }
+    function updateFilePreview() {
+        const fileInput = document.getElementById('file-input');
+        const file = fileInput.files[0];
+        if (file.size > MAX_FILE_SIZE) {
+            alert('This file is too large. Please choose a smaller file.');
+            fileInput.value = '';
+        } else if (file.type !== 'application/pdf') {
+            alert('Please choose a PDF file.');
+            fileInput.value = '';
+        } else {
+            // Show the preview button
+            document.getElementById("preview-button").style.display = "inline-block";
+        }
+    }
 
-                  </script>
-            </div>
+    function openPreviewDialog() {
+        // Get the selected file
+        var file = document.getElementById("file-input").files[0];
+        if (file) {
+            // Create a URL for the file
+            var fileURL = URL.createObjectURL(file);
+            // Open the file in a new window
+            var previewWindow = window.open(fileURL, "PDF Preview", "width=400,height=400");
+        }
+    }
+
+    function updatePhotoPreview() {
+        const photoInput = document.getElementById('others-photo');
+        const photo = photoInput.files[0];
+        if (photo.size > MAX_FILE_SIZE) {
+            alert('This image is too large. Please choose a smaller image.');
+            photoInput.value = '';
+        } else if (!photo.type.startsWith('image/jpeg')) {
+            alert('Please choose a JPG image.');
+            photoInput.value = '';
+        } else {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("photo-preview").src = e.target.result;
+                document.getElementById("photo-preview").style.display = "block";
+            }
+            reader.readAsDataURL(photo);
+        }
+    }
+</script>
+
           </div>
         <input type="submit" value="Submit">
      </form>
-
-    </div>
   </div>
 </div>
 </div>
