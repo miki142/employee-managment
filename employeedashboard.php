@@ -1,4 +1,5 @@
 <?php
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,17 +17,17 @@ body {
   align-items: stretch;
 }
 .page-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: stretch;
-    }
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: stretch;
+}
 
-    .content-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: stretch;
+.content-container {
+ display: flex;
+ flex-direction: row;
+ justify-content: flex-start;
+ align-items: stretch;
     }
 .sidebar {
   width: 200px;
@@ -58,7 +59,7 @@ body {
 .sidebar a.active,
 .sidebar a:hover {
   background-color: #ddd;
-  border-left-color: #09f;
+  border-left-color: green;
 }
 .rightofsidebar{
   margin: 0;
@@ -68,20 +69,37 @@ body {
   justify-content: flex-start;
   align-items: baseline;
 }
+    .section {
+      margin: 20px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section h2 {
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
+
+<div class="page-container">
+  <?php include 'header.php'; ?>
+
+  <div class="content-container">
 <div class="sidebar">
     <h3>Sidebar</h3>
     <a class="active"href="employeedashboard.php">Home</a>
     <a href="employeeleave.php">leave</a>
     <a href="employeeattendance.php">attendance</a>
-    <a href="employee.php">details</a>
+    <a href="employeedetails.php">details</a>
   </div>
-  
-</body>
-</html>
-<?php
+ 
+  <h1>Dashboard</h1>
+  <?php
 // Connect to the database
 require_once "connection.php";
 
@@ -125,34 +143,6 @@ if (mysqli_num_rows($result) > 0) {
   echo "No department data found";
 }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    /* Add your custom CSS styles here */
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .section {
-      margin: 20px 0;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-    }
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .section h2 {
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Dashboard</h1>
-
   <!-- Attendance section -->
   <div class="section" id="attendanceSection">
     <h2>Attendance</h2>
@@ -256,5 +246,7 @@ if (mysqli_num_rows($result) > 0) {
       });
     });
 </script>
+  </div>
+</div>
 </body>
 </html>

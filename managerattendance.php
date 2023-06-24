@@ -1,6 +1,5 @@
 <?php
 session_start();
-$_SESSION["userID"] = "1";
 ?>
 <!DOCTYPE html>
 <html>
@@ -217,10 +216,10 @@ input[type="submit"]:hover {
   <div class="content-container">
   <div class="sidebar">
     <h3>Sidebar</h3>
-    <a href="employeedashboard.php">Home</a>
-    <a href="employeeleave.php">leave</a>
-    <a class="active"href="employeeattendance.php">attendance</a>
-    <a href="employee.php">details</a>
+    <a href="managerdashboard.php">Home</a>
+    <a href="managerleave.php">leave</a>
+    <a class="active"href="managerattendance.php">attendance</a>
+    <a href="managerdetails.php">details</a>
   </div>
 <div class="rightofsidebar">
 <div class="container">
@@ -243,7 +242,7 @@ input[type="submit"]:hover {
             <tbody>
                 <?php
                 require_once "connection.php";
-                $userID = $_SESSION['userID']; // assuming the logged-in user's ID is stored in a session variable
+                $userID = $_SESSION["user_type"];// assuming the logged-in user's ID is stored in a session variable
                 $sql = "SELECT * FROM attendance WHERE managerID = '$userID' AND MONTH(logdate) = MONTH(CURDATE())";
                 $query = $conn->query($sql);
                 while($row = $query->fetch_assoc()){

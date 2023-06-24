@@ -55,7 +55,7 @@
  .sidebar a.active,
  .sidebar a:hover {
    background-color: #ddd;
-   border-left-color: #09f;
+   border-left-color: red;
  }
  
  .form-container {
@@ -158,19 +158,6 @@
  
 
   </style>
-  <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/648ede4e94cf5d49dc5e66a6/1h3718pn4';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
 </head>
 <body>
 <div class="page-container">
@@ -179,10 +166,14 @@ s0.parentNode.insertBefore(s1,s0);
   <div class="content-container">
   <div class="sidebar">
     <h3>Sidebar</h3>
-    <a  href="employeedashboard.php">Home</a>
-    <a href="employeeleave.php">leave</a>
-    <a href="employeeattendance.php">attendance</a>
-    <a class="active"href="employee.php">details</a>
+    <a  href="department_and_position.php">department and position</a>
+    <a href="aproveleave.php">aprove leave</a>
+    <a href="createusers.php">createusers</a>
+    <a  class="active"href="employee.php">add employee</a>
+    <a href="manager.php">add manage</a>
+    <a href="deductionandallowance.php">deduction and allowance</a>
+    <a href="adddeductionandallowance.php">add deduction and allowance</a>
+    <a href="qrcode.php">qrcode</a>
   </div>
 
   <div class="form-container">
@@ -192,28 +183,47 @@ s0.parentNode.insertBefore(s1,s0);
       <h3>Personal Information</h3>
       <form id="employeeForm" action="fillemployee.php" method="post"enctype="multipart/form-data">
         <label for="firstname">First Name:</label>
-        <input type="text" id="firstname" name="firstname">
+        <input type="text" id="firstname" name="firstname"required>
         <label for="middlename">Middle Name:</label>
-        <input type="text" id="middlename" name="middlename">
+        <input type="text" id="middlename" name="middlename"required>
         <label for="lastname">Last Name:</label>
-        <input type="text" id="lastname" name="lastname">
+        <input type="text" id="lastname" name="lastname"required>
         <label for="gender">Gender:</label>
-        <select id="gender" name="gender" style="width: fit-content;">
+        <select id="gender" name="gender" style="width: fit-content;"required>
           <option value="">-choose an option-</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
         <label for="email">Email Address:</label>
-        <input type="email" id="email" name="email">
+        <input type="email" id="email" name="email"required>
         <label for="dateofbirth">Date of Birth:</label>
-        <input type="date" id="dateofbirth" name="dateofbirth"><br>
+        <input type="date" id="dateofbirth" name="dateofbirth"required><br>
         <label for="phone" class="phonestyle">primary Phone Number:</label>
-        <input type="tel" id="phone" name="phonep">
+        <input type="tel" id="phone" name="phonep"required>
         <label for="phone">secondary Phone Number:</label>
-        <input type="tel" id="phone" name="phones">
-        <label style="margin-top: -10px;"for="phone">address:</label>
-        <textarea rows="1" cols="30" type="text" id="address" name="address">
-        </textarea>
+        <input type="tel" id="phone" name="phones"required>
+        <label style="margin-top: -10px;"for="phone">state:</label>
+        <select id="state" name="state" style="width: fit-content;"required>
+            <option value="Afar">Afar</option>
+            <option value="Amhara">Amhara</option>
+            <option value="Benishangul/Gumaz">Benishangul/Gumaz</option>
+            <option value="Gambela">Gambela</option>
+            <option value="Harari">Harari</option>
+            <option value="Oromia">Oromia</option>
+            <option value="Somali">Somali</option>
+            <option value="SNNPR">SNNPR</option>
+            <option value="Tigray">Tigray</option>
+            <option value="Sidama">Sidama</option>
+            <option value="South West Ethiopia">South West Ethiopia</option>
+            <option value="Addis Ababa">Addis Ababa</option>
+            <option value="Dire Dawa">Dire Dawa</option>
+          </select>
+
+        <label style="margin-top: -10px;"for="city">city:</label>
+        <input type="text" id="city" name="city"required>
+          
+        <label style="margin-top: -10px;"for="street">street:</label>
+        <input type="text" id="street" name="street"required>
           <div class="form-section2">
             <h3>Employment Information</h3>
 
@@ -221,14 +231,14 @@ s0.parentNode.insertBefore(s1,s0);
             <?php
               require_once "connection.php";
               //query the branch table
-              $sql = "SELECT branchID,branchname FROM branch";
+              $sql = "SELECT branchID,managerID,branchname FROM branch";
               $result = $conn->query($sql);
 
               // Generate branch select element
               echo '<label for="branch">branch:</label>';
-              echo '<select  name="branch" id="branch" onchange="updatePositionSelect()">';
+              echo '<select  name="branchID" id="branch" onchange="updatePositionSelect()"required>';
               while ($row = $result->fetch_assoc()) {
-                  echo '<option value="' . $row['branchID'] . '">' . $row['branchname'] . '</option>';
+                  echo '<option value="' . $row['branchID'] . $row['managerID'] . '">' . $row['branchname'] . '</option>';
               }
               echo '</select>';
               // Query department table
@@ -237,7 +247,7 @@ s0.parentNode.insertBefore(s1,s0);
 
               // Generate department select element
               echo '<label style="margin-left:77px"for="department">Department:</label>';
-              echo '<select  name="department" id="department" onchange="updatePositionSelect()">';
+              echo '<select  name="department" id="department" onchange="updatePositionSelect()"required>';
               while ($row = $result->fetch_assoc()) {
                   echo '<option value="' . $row['departmentID'] . '">' . $row['departmentname'] . '</option>';
               }
@@ -245,7 +255,7 @@ s0.parentNode.insertBefore(s1,s0);
 
               // Generate position select element
               echo '<label  style="margin-left:67px"for="position">Position:</label>';
-              echo '<select  name="position" id="position">';
+              echo '<select  name="position" id="position"required>';
               echo '</select>';
               // Generate positionsByDepartment object
               $positionsByDepartment = [];
@@ -294,28 +304,36 @@ s0.parentNode.insertBefore(s1,s0);
 
 
               <label style="margin-left:-3px"for="hiredate">Date of Hire:</label>
-              <input type="date" id="hiredate" name="hiredate">
+              <input type="date" id="hiredate" name="hiredate"required>
               <label style="margin-left: 0px;" for="eduction">education:</label>
-                <select id="status" name="educationstatus" >
-                    <option value="">-- choose an option --</option>
-                    <option value="msc">bsc</option>
-                    <option value="bsc">bsc</option>
-                    <option value="others">others</option>
+                <select id="status" name="educationstatus" required>
+                   <option value="msc">MSc</option>
+                  <option value="bsc">BSc</option>
+                  <option value="phd">PhD</option>
+                  <option value="mba">MBA</option>
+                  <option value="ba">BA</option>
+                  <option value="ma">MA</option>
+                  <option value="others">Others</option>
                 </select>
                 <label style="margin-left:0px"for="status">Employment Status:</label>
-              <select id="status"name="employmentstatus">
+              <select id="status"name="employmentstatus"required>
                 <option value="">--Please choose an option--</option>
                 <option value="Full-time">Full-time</option>
                 <option value="Part-time">Part-time</option>
                 <option value="Contract">Contract</option>
               </select><br>
+              <label style="margin-left:0px"for="yearlyvacationdays">yearly vacation days:</label>
+                <input type="number" id="yearlyvacationdays" name="yearlyvacationdays"required>
+              <label style="margin-left:-50px"for="file-input">base salary:</label>
+                  <input type="number" id="salary" name="salary"required>
+                  
               <label style="margin-left:-3px"for="file-input">File(resume):</label>
-                  <input type="file" id="file-input" name="file"onchange="updateFilePreview()">
-                  <button id="preview-button" style="display: none;" onclick="openPreviewDialog()">Preview</button>
+                  <input type="file" id="file-input" name="file"onchange="updateFilePreview()"required>
+                  <button id="preview-button"  style="display: none; position: absolute; bottom: 100px; right: 300px;"onclick="openPreviewDialog()">Preview</button>
                   </div>
                 <label style="margin-left:-47px"for="others-photo">Photo:</label>
-                  <input type="file" id="others-photo"name="photo" onchange="updatePhotoPreview()">
-                  <img id="photo-preview" src="" style="display: none; max-width: 200px; max-height: 200px;">
+                  <input type="file" id="others-photo"name="photo" onchange="updatePhotoPreview()"required>
+                  <img id="photo-preview" src="" style="display: none; max-width: 200px; max-height: 200px; position:absolute; bottom: 30px; right: 600px;">
                        
                 
                   <script>

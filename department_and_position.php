@@ -1,5 +1,6 @@
 <?php
-require_once '/xampp/htdocs/student/employee-managment-system/serversidescripts/connection.php';
+require_once 'connection.php';
+include_once "header.php";
 function getDepartments() {
     global $conn;
     $sql = "SELECT * FROM department";
@@ -123,7 +124,7 @@ $departments = getDepartments();
        .sidebar a.active,
        .sidebar a:hover {
          background-color: #ddd;
-         border-left-color: #09f;
+         border-left-color: red;
        }
 
       .form-container {
@@ -192,10 +193,14 @@ $departments = getDepartments();
     
   <div class="sidebar">
     <h3>Sidebar</h3>
-    <a  href="employeedashboard.php">Home</a>
-    <a href="employeeleave.php">leave</a>
-    <a href="employeeattendance.php">attendance</a>
-    <a class="active"href="employee.php">details</a>
+    <a  class="active"href="department_and_position.php">department and position</a>
+    <a href="aproveleave.php">aprove leave</a>
+    <a href="createusers.php">createusers</a>
+    <a href="employee.php">add employee</a>
+    <a href="manager.php">add manage</a>
+    <a href="deductionandallowance.php">deduction and allowance</a>
+    <a href="deductionandallowance.php">add deduction and allowance</a>
+    <a href="qrcode.php">qrcode</a>
   </div>
     <div class="container">
         <div class="main-content">

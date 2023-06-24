@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../bootstrap-5-admin-dashboard-template-main/js"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "employee-managment-system-folderedby-access"
+	}
+}

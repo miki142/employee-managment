@@ -1,12 +1,12 @@
 <?php
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>leave</title>
-  <style>
-   body {
+  <style>   body {
   margin: 0;
   padding: 0;
   display: flex;
@@ -14,7 +14,6 @@ session_start();
   justify-content: flex-start;
   align-items: stretch;
 }
-
 .page-container {
       display: flex;
       flex-direction: column;
@@ -58,7 +57,7 @@ session_start();
 .sidebar a.active,
 .sidebar a:hover {
   background-color: #ddd;
-  border-left-color: #09f;
+  border-left-color: green;
 }
 .rightofsidebar{
   margin: 0;
@@ -99,9 +98,6 @@ h3 {
         th, td {
             text-align: left;
             padding: 8px;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
         }
         th {
             background-color: #4CAF50;
@@ -208,110 +204,165 @@ input[type="submit"]:hover {
   </style>
 </head>
 <body>
-
 <div class="page-container">
   <?php include 'header.php'; ?>
 
   <div class="content-container">
-
   <div class="sidebar">
     <h3>Sidebar</h3>
     <a href="employeedashboard.php">Home</a>
     <a class="active"href="employeeleave.php">leave</a>
     <a href="employeeattendance.php">attendance</a>
-    <a href="employee.php">details</a>
+    <a href="employeedetails.php">details</a>
   </div>
-<div class="rightofsidebar">
+  <div class="rightofsidebar">
 <div class="container">
    <h1>Leave Request Form</h1>
-   <form action="fillleave.php" method="post">
-     <label for="userID">Your ID:</label>
-        <input type="text" id="userID" name="userID" value="<?php echo $_SESSION['user_type']; ?>" required><br>
-       <label for="leavetype">Leave Type:</label>
+   <form action="fillleave.php" method="post"><label for="userID">Your ID:</label>
+        <input type="text" id="userID" name="userID" readonly value="<?php echo $_SESSION['user_type']; ?>" required><br>
+
+        <label for="leavetype">Leave Type:</label>
         <select id="leavetype" name="leavetype" required>
             <option value="">--Please choose an option--</option>
             <option value="sick">Sick Leave</option>
             <option value="vacation">Vacation Leave</option>
             <option value="personal">Personal Leave</option>
         </select><br>
-
         <label for="startdate">Start Date:</label>
-        <input type="date" id="startdate" name="startdate" required><br>
+<input type="date" id="startdate" name="startdate" required min="" onchange="setEndDateMin()"><br>
 
-        <label for="enddate">End Date:</label>
-        <input type="date" id="enddate" name="enddate" required><br>
+<label for="enddate">End Date:</label>
+<input type="date" id="enddate" name="enddate" required min="">
+
+<script>
+    function setEndDateMin() {
+        let startDate = new Date(document.querySelector("#startdate").value);
+        let endDateMin = new Date(startDate.getTime() + 86400000);
+        document.querySelector("#enddate").min = endDateMin.toISOString().split("T")[0];
+    }
+    document.querySelector("#startdate").min = new Date().toISOString().split("T")[0];
+</script>
+
 
         <input type="submit" value="apply">
     </form>
-</div>
+    </div>
     <div class="container">
      <div class="employee-info">
-     <table>
-            <thead> <br><br>
-            <tr>
-                <td>ID</td>
-                <td>EMPLOYEE ID</td>
-                <td>DATE</td>
-                <td>LEAVE TYPE</td>
-                <td>START DATE</td>
-                <td>END DATE</td>
-                <td>STATUS</td>
-            </tr>    
-            </thead>
-         <tbody>
-            <?php
+     <style>
+    .status-pending {
+    border: 11px solid blue;
+    background-color: transparent;
+}
+.status-denied {
+    border: 11px solid red;
+    background-color: transparent;
+}
+.status-approved {
+    border: 11px solid green;
+    background-color: transparent;
+}
 
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>manager ID</td>
+            <td>DATE</td>
+            <td>leave type</td>
+            <td>START DATE</td>
+            <td>END DATE</td>
+            <td>STATUS</td>
+        </tr>    
+    </thead>
+    <tbody>
+        <?php
             require_once "connection.php";
-            $sql = "SELECT * from employee_leave WHERE employeeID IS NOT NULL  AND date=CURDATE()";
+            $sql = "SELECT * from employee_leave WHERE employeeID IS NOT NULL AND date=CURDATE()";
             $query = $conn->query($sql);
             if ($query->num_rows > 0) {
-              // Output data of each row
-              while($row = $result->fetch_assoc()) {
-                  echo "<tr>";
-                  echo "<td>" . $row["leaveID"] . "</td>";
-                  echo "<td>" . $row["employeeID"] . "</td>";
-                  echo "<td>" . $row["date"] . "</td>";
-                  echo "<td>" . $row["leavetype"] . "</td>";
-                  echo "<td>" . $row["startdate"] . "</td>";
-                  echo "<td>" . $row["enddate"] . "</td>";
-                  echo "<td>" . $row["status"] . "</td>";
-                  echo "</tr>";
-              }
-          } else {
-              echo "<tr><td colspan='11'>No results found</td></tr>";
-          } 
-            ?>
+                // Output data of each row
+                while($row = $query->fetch_assoc()) {
+                    $statusClass = "";
+                    $status = strtolower(trim($row["status"]));
+                    if ($status == "pending") {
+                        $statusClass = "status-pending";
+                    } elseif ($status == "denied") {
+                        $statusClass = "status-denied";
+                    } elseif ($status == "approved") {
+                        $statusClass = "status-approved";
+                    }
+                    echo "<tr class='$statusClass'>";
+                    echo "<td>" . $row["leaveID"] . "</td>";
+                    echo "<td>" . $row["employeeID"] . "</td>";
+                    echo "<td>" . $row["date"] . "</td>";
+                    echo "<td>" . $row["leavetype"] . "</td>";
+                    echo "<td>" . $row["startdate"] . "</td>";
+                    echo "<td>" . $row["enddate"] . "</td>";
+                    echo "<td>" . $row["status"] . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='11'>No results found</td></tr>";
+            }
+        ?>
+    </tbody>
+</table>
 
-         </tbody>
-        </table>
+<table>
+    <h5>yearly</h5>
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>employee ID</td>
+            <td>DATE</td>
+            <td>leave type</td>
+            <td>START DATE</td>
+            <td>END DATE</td>
+            <td>STATUS</td>
+        </tr>    
+    </thead>
+    <tbody>
+        <?php
+            $sql = "SELECT * from employee_leave WHERE employeeID IS NOT NULL AND YEAR(date) = YEAR(CURDATE())";
+            $query = $conn->query($sql);
+            if ($query->num_rows > 0) {
+                // Output data of each row
+                while($row = $query->fetch_assoc()) {
+                    $statusClass = "";
+                    $status = strtolower(trim($row["status"]));
+                    if ($status == "pending") {
+                        $statusClass = "status-pending";
+                    } elseif ($status == "denied") {
+                        $statusClass = "status-denied";
+                    } elseif ($status == "approved") {
+                        $statusClass = "status-approved";
+                    }
+                    echo "<tr class='$statusClass'>";
+                    echo "<td>" . $row["leaveID"] . "</td>";
+                    echo "<td>" . $row["employeeID"] . "</td>";
+                    echo "<td>" . $row["date"] . "</td>";
+                    echo "<td>" . $row["leavetype"] . "</td>";
+                    echo "<td>" . $row["startdate"] . "</td>";
+                    echo "<td>" . $row["enddate"] . "</td>";
+                    echo "<td>" . $row["status"] . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='11'>No results found</td></tr>";
+            }
+            $conn->close();
+        ?>
+    </tbody>
+</table>
+
+
     </div>
-      <div class="employee-info">
-        <h5>yearly</h5>
-      <?php
-          $sql = "SELECT * from employee_leave WHERE employeeID IS NOT NULL AND YEAR(date) = YEAR(CURDATE())";
-          $query = $conn->query($sql);
-          if ($query->num_rows > 0) {
-              // Output data of each row
-              while($row = $query->fetch_assoc()) {
-                  echo "<tr>";
-                  echo "<td>" . $row["leaveID"] . "</td>";
-                  echo "<td>" . $row["employeeID"] . "</td>";
-                  echo "<td>" . $row["date"] . "</td>";
-                  echo "<td>" . $row["leavetype"] . "</td>";
-                  echo "<td>" . $row["startdate"] . "</td>";
-                  echo "<td>" . $row["enddate"] . "</td>";
-                  echo "<td>" . $row["status"] . "</td>";
-                  echo "</tr>";
-              }
-          } else {
-              echo "<tr><td colspan='11'>No results found</td></tr>";
-          }
-          $conn->close();
-          ?>
-      </div>
     </div>
 </div>
   </div>
-</div>
+  </div>
 </body>
 </html>
